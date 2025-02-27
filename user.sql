@@ -3,13 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2025-02-27 15:29:15
+-- 產生時間： 2025-02-27 15:46:58
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+08:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,6 +20,48 @@ SET time_zone = "+00:00";
 --
 -- 資料庫： `bark_bijou`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `gender`
+--
+
+CREATE TABLE `gender` (
+  `id` int(2) UNSIGNED NOT NULL,
+  `name` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- 傾印資料表的資料 `gender`
+--
+
+INSERT INTO `gender` (`id`, `name`) VALUES
+(1, '男'),
+(2, '女');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `levels`
+--
+
+CREATE TABLE `levels` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `levels`
+--
+
+INSERT INTO `levels` (`id`, `name`, `description`) VALUES
+(1, 'Basic', ''),
+(2, 'Bronze', ''),
+(3, 'Silver', ''),
+(4, 'Gold', ''),
+(5, 'Platinum', '');
 
 -- --------------------------------------------------------
 
@@ -263,9 +305,61 @@ INSERT INTO `users` (`id`, `name`, `gender_id`, `account`, `password`, `email`, 
 (215, 'Loll', 2, 'loll', '827ccb0eea8a706c4c34a16891f84e', 'loll@gmail.com', '099926267', '', 0, 0, '2025-02-27', 1, '2025-02-14'),
 (216, 'Admin1', 1, 'admin1', '827ccb0eea8a706c4c34a16891f84e', 'admin1@gmail.com', '', '', 0, 0, '2025-02-27', 1, '2025-01-31');
 
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `user_collection`
+--
+
+CREATE TABLE `user_collection` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `item_type` enum('course','product','hotel','article') NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `user_image`
+--
+
+CREATE TABLE `user_image` (
+  `id` int(10) UNSIGNED DEFAULT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `user_order_list`
+--
+
+CREATE TABLE `user_order_list` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `order_id` int(10) UNSIGNED NOT NULL,
+  `user-id` int(10) UNSIGNED NOT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL,
+  `amount` int(10) NOT NULL,
+  `order_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- 已傾印資料表的索引
 --
+
+--
+-- 資料表索引 `gender`
+--
+ALTER TABLE `gender`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 資料表索引 `levels`
+--
+ALTER TABLE `levels`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- 資料表索引 `users`
@@ -277,14 +371,51 @@ ALTER TABLE `users`
   ADD KEY `gender_id` (`gender_id`) USING BTREE;
 
 --
+-- 資料表索引 `user_collection`
+--
+ALTER TABLE `user_collection`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`,`item_type`,`item_id`);
+
+--
+-- 資料表索引 `user_order_list`
+--
+ALTER TABLE `user_order_list`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `gender`
+--
+ALTER TABLE `gender`
+  MODIFY `id` int(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `levels`
+--
+ALTER TABLE `levels`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `user_collection`
+--
+ALTER TABLE `user_collection`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `user_order_list`
+--
+ALTER TABLE `user_order_list`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
