@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2025-03-03 02:36:28
+-- 產生時間： 2025-03-03 09:23:32
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -272,18 +272,28 @@ INSERT INTO `users` (`id`, `name`, `gender_id`, `account`, `password`, `email`, 
 (203, 'Duck', 0, 'duck', '827ccb0eea8a706c4c34a16891f84e7b', 'duck@gmail.com', '0934343465', '', 0, 0, '2025-02-25', 1, '2004-02-21'),
 (204, 'Apple', 2, 'apple', '827ccb0eea8a706c4c34a16891f84e7b', 'apple@gmail.com', '0987890210', '', 0, 0, '2025-02-26', 1, '1991-10-26'),
 (205, 'Banana', 2, 'banana', '827ccb0eea8a706c4c34a16891f84e7b', 'banana@gmail.com', '0978456985', '', 0, 0, '2025-02-26', 1, '2016-01-04'),
-(206, 'Melon', 2, 'melon', '827ccb0eea8a706c4c34a16891f84e7b', 'melon@gmail.com', '0975215898', '', 0, 0, '2025-02-26', 1, '2002-06-19');
+(206, 'Melon', 2, 'melon', '827ccb0eea8a706c4c34a16891f84e7b', 'melon@gmail.com', '0975215898', '', 0, 0, '2025-02-26', 1, '2002-06-19'),
+(209, 'Admin1', 1, 'admin1', '827ccb0eea8a706c4c34a16891f84e7b', 'admin1@gmail.com', '0912304036', '', 0, 0, '2025-03-03', 1, '2025-02-27'),
+(210, 'Admin2', 1, 'admin2', '827ccb0eea8a706c4c34a16891f84e7b', 'admin2@gmail.com', '0997894036', '', 0, 0, '2025-03-03', 1, '2025-02-20');
 
 -- --------------------------------------------------------
 
 --
--- 資料表結構 `user_image`
+-- 資料表結構 `user_images`
 --
 
-CREATE TABLE `user_image` (
-  `id` int(10) UNSIGNED DEFAULT NULL,
-  `name` varchar(30) NOT NULL
+CREATE TABLE `user_images` (
+  `id` int(11) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- 傾印資料表的資料 `user_images`
+--
+
+INSERT INTO `user_images` (`id`, `user_id`, `image`) VALUES
+(1, 210, 'user_210_1740988336.jpg');
 
 --
 -- 已傾印資料表的索引
@@ -305,6 +315,13 @@ ALTER TABLE `users`
   ADD KEY `gender_id` (`gender_id`) USING BTREE;
 
 --
+-- 資料表索引 `user_images`
+--
+ALTER TABLE `user_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
 --
 
@@ -318,7 +335,13 @@ ALTER TABLE `gender`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `user_images`
+--
+ALTER TABLE `user_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
